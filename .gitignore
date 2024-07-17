@@ -299,25 +299,3 @@ pyrightconfig.json
 *.png
 *.jpg
 *.jpeg
-
-# exclude *.csv
-*.csv
-
-# exclude *.h5
-*.h5
-
-# exclude *.pk1
-*.pk1
-
-# exclude *.xlsx
-*.xlsx
-
-# exclude *.svg
-*.svg
-
-# exclude *.keras
-*.keras
-
-# exclude *.npz
-*.npz
-att_proj/.env
