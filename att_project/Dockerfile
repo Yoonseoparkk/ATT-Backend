@@ -15,6 +15,7 @@ ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.s
 RUN chmod +x /wait-for-it.sh
 
 COPY . /app/
+RUN chmod +x /app/manage.py
 
 # ENV PYTHONUNBUFFERED 1
 
