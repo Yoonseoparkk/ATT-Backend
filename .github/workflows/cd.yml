@@ -63,7 +63,7 @@ jobs:
     - name: Build and Push Docker Image
       run: |
         cd att_project
-        docker buildx build --platform linux/arm64 -f Dockerfile -t ghcr.io/${{ github.actor }}/att-django-backend-server:latest --push .
+        docker buildx build --no-cache --platform linux/arm64 -f Dockerfile -t ghcr.io/${{ github.actor }}/att-django-backend-server:latest --push .
 
   deploy:
     needs: build
