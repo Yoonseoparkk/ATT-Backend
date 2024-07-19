@@ -39,8 +39,8 @@ jobs:
         fi
     - name: Grant execute permission for scripts
       run: |
-        chmod +x TransFarmers/wait-for-it.sh
-        chmod +x TransFarmers/manage.py
+        chmod +x att_project/wait-for-it.sh
+        chmod +x att_project/manage.py
     
     - name: Configure Docker
       uses: docker/setup-buildx-action@v1
