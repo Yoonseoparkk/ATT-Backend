@@ -1,7 +1,7 @@
 version: '3'
 services:
-  web:
-    container_name: web
+  django:
+    container_name: django
     build: .
     command: /app/wait-for-it.sh db:3306 -t 15 -- sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     restart: always

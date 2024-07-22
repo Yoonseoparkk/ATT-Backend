@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-nivow%m+eowu4oizheuoraof=&rf#urcvdwlu8kjyq_cru&#53
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "15.164.211.64"]
 
 
 # Application definition
@@ -83,6 +83,8 @@ WSGI_APPLICATION = "att_project.wsgi.application"
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
 
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+
 # CORS 설정 옵션
 CORS_ALLOW_CREDENTIALS = True
 
@@ -114,7 +116,7 @@ DATABASES = {
         'NAME': os.getenv('DATABASE_NAME'),
         'USER': os.getenv('DATABASE_USER'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST': 'localhost',
+        'HOST': os.getenv('DATABASE_HOST'),
         'PORT': '3306',
     }
 }
