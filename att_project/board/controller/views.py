@@ -21,11 +21,10 @@ class BoardView(viewsets.ViewSet): # viewset 왜 사용하는지 알아보기 >>
         return Response(serializer.data)
 
     def create(self, request):
-        # serializer 왜 쓰는지 질문하기
-        serializer = BoardSerializer(data=request.data) # 어떤 데이터인지 명시적으로 받기 위함
+        serializer = BoardSerializer(data=request.data)
         print(request.data)
         if serializer.is_valid():
-            board = self.boardService.createBoard(serializer.validated_data) # 저장이 적용된 테이블 상태
+            board = self.boardService.createBoard(serializer.validated_data)
             return Response(BoardSerializer(board).data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
