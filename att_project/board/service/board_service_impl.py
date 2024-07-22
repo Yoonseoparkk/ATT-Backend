@@ -7,10 +7,6 @@ class BoardServiceImpl(BoardService):
     def __new__(cls):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
-
-            # cls.__instance == 현재의 자기자신 클래스 => BoardSerivceImpl
-            # class이름.변수 == 그 클래스의 변수
-            # class이름.함수() == 그 클래스 함수
             cls.__instance.__boardRepository = BoardRepositoryImpl.getInstance()
         return cls.__instance
 
