@@ -20,8 +20,3 @@ class BoardRepositoryImpl(BoardRepository):
 
     def list(self):
         return Board.objects.all().order_by('regDate')
-
-    def create(self, boardData):
-        board = Board(**boardData)
-        board.save()
-        return board

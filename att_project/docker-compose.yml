@@ -2,7 +2,7 @@ version: '3'
 services:
   django:
     container_name: django
-    image: ghcr.io/${GITHUB_ACTOR}/att-django-backend-server:latest
+    image: ghcr.io/${GITHUB_ACTOR}django-backend-server:latest
     command: /app/wait-for-it.sh db:3306 -t 15 -- sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     restart: always
     ports:
@@ -29,9 +29,8 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PASSWORD=${REDIS_PASSWORD}
-      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
     networks:
-      - app
+      - app-network
 
   db:
     image: mysql:8.0
@@ -50,7 +49,7 @@ services:
       - ./mysql/logs:/var/log/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - app
+      - app-network
 
   redis:
     image: redis:latest
@@ -62,7 +61,7 @@ services:
       - redis_data:/data
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
     networks:
-      - app
+      - app-network
 
 volumes:
   db_data:
@@ -70,5 +69,5 @@ volumes:
   app:
 
 networks:
-  app:
+  app-network:
     driver: bridge
