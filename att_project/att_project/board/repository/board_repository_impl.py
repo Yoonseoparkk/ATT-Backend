@@ -19,9 +19,9 @@ class BoardRepositoryImpl(BoardRepository):
         return cls.__instance
 
     def list(self):
-        return Board.objects.all().order_by('regDate')
+      return Board.objects.all().order_by('regDate')
 
     def create(self, boardData):
-        board = Board(**boardData) # 테이블에 들어가야 하기때문에 request에 담긴 순수데이터만 뽑겠다. [] {} ""
-        board.save() # baord => 현재 table 상태입니다.
+        board = Board(**boardData)
+        board.save()
         return board

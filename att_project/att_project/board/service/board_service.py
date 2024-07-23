@@ -1,11 +1,9 @@
 from abc import ABC, abstractmethod
-class BoardRepository(ABC):
-
+class BoardService(ABC):
     @abstractmethod
     def list(self):
         pass
 
-    # add
     @abstractmethod
-    def create(self, boardData):
+    def createBoard(self, boardData):
         pass
