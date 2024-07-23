@@ -37,9 +37,6 @@ SECRET_KEY = "django-insecure-$s2_2n$qooiju4b2g)_w5ibyf%r4i_25c_5u6agl5nq!$(i3(w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.44', 'localhost']
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -88,7 +85,7 @@ WSGI_APPLICATION = "att_project.wsgi.application"
 
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
-
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 print('CORS_ALLOWED_ORIGINS:', CORS_ALLOWED_ORIGINS)
 
 CORS_ALLOW_CREDENTIALS = True
