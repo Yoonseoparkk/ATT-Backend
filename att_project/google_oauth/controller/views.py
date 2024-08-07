@@ -23,12 +23,12 @@ class GoogleOauthView(viewsets.ViewSet):
     def googleAccessTokenURI(self, request):
         serializer = GoogleOauthAccessTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        code = serializer.validated_data
-        code = parse.unquote(code['code'])
-        print(f"code: {code}")
+        auth_dict = serializer.validated_data
+        auth_code = parse.unquote(auth_dict['code'])
+        print(f"auth_code: {auth_code}")
 
         try:
-            accessToken = self.googleOauthService.requestAccessToken(code)
+            accessToken = self.googleOauthService.requestAccessToken(auth_code)
             print(f"accessToken: {accessToken}")
             return JsonResponse({'accessToken': accessToken})
         except Exception as e:
