@@ -21,4 +21,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('board/', include('board.urls')),
     path('google_oauth/', include('google_oauth.urls')),
+    path('kakao_oauth/', include('kakao_oauth.urls')),
 ]
