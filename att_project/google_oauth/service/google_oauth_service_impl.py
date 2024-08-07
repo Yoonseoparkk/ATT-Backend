@@ -16,6 +16,7 @@ class GoogleOauthServiceImpl(GoogleOauthService):
             cls.__instance.clientSecret = settings.GOOGLE['CLIENT_SECRET']
             cls.__instance.redirectUri = settings.GOOGLE['REDIRECT_URI']
             cls.__instance.tokenRequestUri = settings.GOOGLE['TOKEN_REQUEST_URI']
+            cls.__instance.userinfoRequestUri = settings.GOOGLE['USERINFO_REQUEST_URI']
 
         return cls.__instance
 
@@ -43,4 +44,9 @@ class GoogleOauthServiceImpl(GoogleOauthService):
         }
 
         response = requests.post(self.tokenRequestUri, data=accessTokenRequestForm)
+        return response.json()
+
+    def requestUserInfo(self, accessToken):
+        userinfoRequestUri = self.userinfoRequestUri + accessToken
+        response = requests.post(userinfoRequestUri)
         return response.json()

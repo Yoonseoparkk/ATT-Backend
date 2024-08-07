@@ -11,4 +11,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('google', GoogleOauthView.as_view({'get': 'googleOauthURI'}), name='get-google-oauth-uri'),
     path('google/access-token', GoogleOauthView.as_view({'post': 'googleAccessTokenURI'}), name='get-google-access-token-uri'),
+    path('google/user-info', GoogleOauthView.as_view({'post': 'googleUserInfoURI'}), name='get-google-user-info-uri'),
 ]

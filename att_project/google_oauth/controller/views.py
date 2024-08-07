@@ -33,3 +33,13 @@ class GoogleOauthView(viewsets.ViewSet):
             return JsonResponse({'accessToken': accessToken})
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
+
+    def googleUserInfoURI(self, request):
+        accessToken = request.data.get('access_token')
+        print(f'accessToken: {accessToken}')
+
+        try:
+            user_info = self.googleOauthService.requestUserInfo(accessToken)
+            return JsonResponse({'user_info': user_info})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
