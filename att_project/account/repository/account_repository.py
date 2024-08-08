@@ -2,4 +2,6 @@ from abc import ABC, abstractmethod
 
 
 class AccountRepository(ABC):
-    pass
+    @abstractmethod
+    def create(self, loginType, roleType):
+        pass

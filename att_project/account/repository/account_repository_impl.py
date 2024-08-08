@@ -1,3 +1,6 @@
+from account.entity.account import Account
+from account.entity.account_login_type import AccountLoginType
+from account.entity.account_role_type import AccountRoleType
 from account.repository.account_repository import AccountRepository
 
 
@@ -16,4 +19,11 @@ class AccountRepositoryImpl(AccountRepository):
             cls.__instance = cls()
 
         return cls.__instance
+
+    def create(self, loginType, roleType):
+        loginTypeEntity, _ = AccountLoginType.objects.get_or_create(loginType=loginType)
+        roleTypeEntity, _ = AccountRoleType.objects.get_or_create(roleType=roleType)
+
+        account = Account.objects.create(loginType=loginTypeEntity, roleType=roleTypeEntity)
+        return account
 
