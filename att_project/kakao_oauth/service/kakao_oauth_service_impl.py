@@ -37,8 +37,7 @@ class KakaoOauthServiceImpl(KakaoOauthService):
             'grant_type': 'authorization_code',
             'client_id': self.clientId,
             'redirect_uri': self.redirectUri,
-            'code': kakaoAuthCode,
-            'client_secret': self.clientSecret
+            'code': kakaoAuthCode
         }
 
         response = requests.post(self.tokenRequestUri, data=accessTokenRequestForm)
