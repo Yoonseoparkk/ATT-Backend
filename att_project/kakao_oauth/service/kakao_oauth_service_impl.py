@@ -13,9 +13,9 @@ class KakaoOauthServiceImpl(KakaoOauthService):
 
             cls.__instance.loginUrl = settings.KAKAO['LOGIN_URL']
             cls.__instance.clientId = settings.KAKAO['CLIENT_ID']
-            cls.__instance.clientSecret = settings.KAKAO['CLIENT_SECRET']
             cls.__instance.redirectUri = settings.KAKAO['REDIRECT_URI']
             cls.__instance.tokenRequestUri = settings.KAKAO['TOKEN_REQUEST_URI']
+            cls.__instance.userinfoRequestUri = settings.KAKAO['USERINFO_REQUEST_URI']
 
         return cls.__instance
 
