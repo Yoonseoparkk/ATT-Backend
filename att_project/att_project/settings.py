@@ -33,6 +33,14 @@ KAKAO = {
     'USERINFO_REQUEST_URI': os.getenv('KAKAO_USERINFO_REQUEST_URI'),
 }
 
+NAVER = {
+    'LOGIN_URL': os.getenv('NAVER_LOGIN_URL'),
+    'CLIENT_ID': os.getenv('NAVER_CLIENT_ID'),
+    'REDIRECT_URI': os.getenv('NAVER_CALLBACK_URL'),
+    'TOKEN_REQUEST_URI': os.getenv('KAKAO_TOKEN_REQUEST_URI'),
+    'USERINFO_REQUEST_URI': os.getenv('KAKAO_USERINFO_REQUEST_URI'),
+}
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

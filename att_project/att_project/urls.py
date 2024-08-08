@@ -23,4 +23,5 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('google_oauth/', include('google_oauth.urls')),
     path('kakao_oauth/', include('kakao_oauth.urls')),
+    path('naver_oauth/', include('naver_oauth.urls')),
 ]
