@@ -1,5 +1,5 @@
 """
-URL configuration for att_project project.
+URL configuration for att_proj project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -18,8 +18,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path('board/', include('board.urls')),
-    path('google_oauth/', include('google_oauth.urls')),
-    path('kakao_oauth/', include('kakao_oauth.urls')),
+    path('admin/', admin.site.urls),
+    path('board/', include("board.urls")),
 ]
