@@ -18,3 +18,14 @@ class ProfileRepositoryImpl(ProfileRepository):
 
         return cls.__instance
 
+    def findByEmail(self, email):
+        try:
+            profile = Profile.objects.get(email=email)
+            return profile
+        except Profile.DoesNotExist:
+            print(f"email로 profile을 찾을 수 없습니다.: {email}")
+            return None
+        except Exception as e:
+            print(f"error occurred during email duplicate check: {e}")
+            return None
+

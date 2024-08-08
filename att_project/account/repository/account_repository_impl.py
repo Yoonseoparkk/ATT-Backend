@@ -16,3 +16,4 @@ class AccountRepositoryImpl(AccountRepository):
             cls.__instance = cls()
 
         return cls.__instance
+

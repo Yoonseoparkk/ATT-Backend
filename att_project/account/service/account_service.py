@@ -2,4 +2,6 @@ from abc import ABC, abstractmethod
 
 
 class AccountService(ABC):
-    pass
+    @abstractmethod
+    def checkEmailDuplication(self, email):
+        pass
