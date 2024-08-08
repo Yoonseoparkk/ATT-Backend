@@ -19,3 +19,17 @@ class AccountView(viewsets.ViewSet):
         except Exception as e:
             print("이메일 중복 체크 중 에러 발생:", e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    def checkNicknameDuplication(self, request):
+        print("checkNicknameDuplication()")
+
+        try:
+            nickname = request.data.get('newNickname')
+            print(f"nickname: {nickname}")
+            isDuplicate = self.accountService.checkNicknameDuplication(nickname)
+
+            return Response({'isDuplicate': isDuplicate, 'message': 'Nickname이 이미 존재합니다.' \
+                if isDuplicate else '사용 가능한 nickname 입니다.'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            print("닉네임 중복 체크 중 에러 발생:", e)
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
