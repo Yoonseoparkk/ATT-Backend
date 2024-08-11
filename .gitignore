@@ -299,6 +299,3 @@ pyrightconfig.json
 *.png
 *.jpg
 *.jpeg
-
-# exclude migrations dir
-migrations

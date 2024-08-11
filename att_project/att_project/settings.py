@@ -13,9 +13,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from datetime import timedelta
 
 load_dotenv()
 
+# 설정 코드
 GOOGLE = {
     'LOGIN_URL': os.getenv('GOOGLE_LOGIN_URL'),
     'CLIENT_ID': os.getenv('GOOGLE_CLIENT_ID'),
@@ -39,17 +41,17 @@ NAVER = {
     'REDIRECT_URI': os.getenv('NAVER_CALLBACK_URL'),
     'CLIENT_SECRET': os.getenv('NAVER_CLIENT_SECRET'),
     'TOKEN_REQUEST_URI': os.getenv('NAVER_TOKEN_REQUEST_URI'),
+    'USERINFO_REQUEST_URI': os.getenv('NAVER_USERINFO_REQUEST_URI'),
 }
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-$s2_2n$qooiju4b2g)_w5ibyf%r4i_25c_5u6agl5nq!$(i3(w"
+# SECURITY WARNING: keep the secret key used in production secret
+SECRET_KEY = os.getenv('SECRET_KEY', 'your_default_secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -68,7 +70,62 @@ INSTALLED_APPS = [
     'django_extensions',
     'board',
     'account',
+    # JWT 인증 초기 환경 세팅
+
+    # 필요한 라이브러리 설치 명령어
+    # pip install djangorestframework
+    # pip install djangorestframework-simplejwt
+
+    # 설치한 라이브러리 ('rest_framework'는 위에 있음)
+    'rest_framework_simplejwt',
+
+    # 생성한 프로젝트 앱 이름
+    'json_web_token',
 ]
+
+# 앱에서 내가 설정한 사용자를 정의
+AUTH_USER_MODEL = 'json_web_token.User'
+
+# JWT Token을 simplejwt의 JWTAuthentication으로 인증 (지금은 토큰 가지고 있으면 누구든지 입장)
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+# 추가적인 JWT 설정 (지금은 필요한 기본 세팅만 설정)
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': False,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('access',),
+}
+
+# 패키지 공식 문서 https://django-rest-framework-simplejwt.readthedocs.io/en/latest/rest_framework_simplejwt.html
+# 실제로 어떻게 인코딩, 디코딩 되는지 확인 하는 주소 사이트 https://jwt.io/
+
+# 주요 옵션
+# ACCESS_TOKEN_LIFETIME: Access token의 유효 시간을 설정합니다.
+# REFRESH_TOKEN_LIFETIME: Refresh token의 유효 시간을 설정합니다.
+# ROTATE_REFRESH_TOKENS: Refresh token을 재발급할지 여부를 설정합니다.
+# BLACKLIST_AFTER_ROTATION: Refresh token을 재발급한 후 기존 토큰을 블랙리스트에 추가할지 여부를 설정합니다.
+# ALGORITHM: JWT 서명에 사용할 알고리즘을 설정합니다. (HS256, RS256 등)
+# SIGNING_KEY: 서명에 사용할 비밀 키를 설정합니다.
+# VERIFYING_KEY: 공개 키를 사용한 검증 시 사용되는 키를 설정합니다.
+# AUDIENCE: 토큰의 대상을 설정합니다.
+# ISSUER: 토큰을 발행한 주체를 설정합니다.
+# AUTH_HEADER_TYPES: 인증 헤더의 타입을 설정합니다. (Bearer 등)
+# AUTH_HEADER_NAME: 인증 헤더의 이름을 설정합니다.
+# USER_ID_FIELD: 사용자 모델에서 사용자를 식별하는 필드의 이름을 설정합니다.
+# USER_ID_CLAIM: 토큰에 포함될 사용자 ID의 클레임 이름을 설정합니다.
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
