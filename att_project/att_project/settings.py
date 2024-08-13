@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'board',
     'account',
+    'redis_token',
     # JWT 인증 초기 환경 세팅
 
     # 필요한 라이브러리 설치 명령어
