@@ -40,6 +40,9 @@ urlpatterns = [
     # Naver OAuth 인증과 관련된 URL 설정
     path('naver_oauth/', include('naver_oauth.urls')),
 
+    # Redis 관련된 URL 설정
+    path('redis_token/', include('redis_token.urls')),
+
     # JWT 관련 URL
     path('api/', include('json_web_token.urls')),
 
