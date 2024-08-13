@@ -11,4 +11,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('naver', NaverOauthView.as_view({'get': 'naverOauthURI'}), name='get-naver-oauth-uri'),
     path('naver/access-token', NaverOauthView.as_view({'post': 'naverAccessTokenURI'}), name='get-naver-access-token'),
+    path('naver/user-info', NaverOauthView.as_view({'post': 'naverUserInfoURI'}), name='get-naver-user-info-uri'),
 ]
