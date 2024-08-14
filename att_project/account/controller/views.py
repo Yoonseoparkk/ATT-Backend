@@ -12,6 +12,7 @@ class AccountView(viewsets.ViewSet):
         print("checkEmailDuplication()")
 
         try:
+            
             email = request.data.get('email')
             isDuplicate = self.accountService.checkEmailDuplication(email)
 
@@ -37,11 +38,12 @@ class AccountView(viewsets.ViewSet):
 
     def registerAccount(self, request):
         try:
+            loginType = request.data.get('loginType')
             nickname = request.data.get('nickname')
             email = request.data.get('email')
 
             account = self.accountService.registerAccount(
-                loginType='KAKAO',
+                loginType=loginType,
                 roleType='NORMAL',
                 nickname=nickname,
                 email=email,
