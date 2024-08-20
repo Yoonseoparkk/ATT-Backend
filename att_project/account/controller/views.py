@@ -1,18 +1,21 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
+from account.repository.profile_repository_impl import ProfileRepositoryImpl
 from account.serializers import AccountSerializer
 from account.service.account_service_impl import AccountServiceImpl
+from redis_token.service.redis_service_impl import RedisServiceImpl
 
 
 class AccountView(viewsets.ViewSet):
     accountService = AccountServiceImpl.getInstance()
+    redisService = RedisServiceImpl.getInstance()
+    profileRepository = ProfileRepositoryImpl.getInstance()
 
     def checkEmailDuplication(self, request):
         print("checkEmailDuplication()")
 
         try:
-            
             email = request.data.get('email')
             isDuplicate = self.accountService.checkEmailDuplication(email)
 
@@ -54,3 +57,29 @@ class AccountView(viewsets.ViewSet):
         except Exception as e:
             print("계정 생성 중 에러 발생:", e)
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def getNickname(self, request):
+        userToken = request.data.get("userToken")
+        if not userToken:
+            return Response(None, status=status.HTTP_200_OK)
+        accountId = self.redisService.getValueByKey(userToken)
+        profile = self.profileRepository.findById(accountId)
+        if profile is None:
+            return Response(
+                {"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
+        nickname = profile.nickname
+        return Response(nickname, status=status.HTTP_200_OK)
+
+    def getEmail(self, request):
+        userToken = request.data.get("userToken")
+        if not userToken:
+            return Response(None, status=status.HTTP_200_OK)
+        accountId = self.redisService.getValueByKey(userToken)
+        profile = self.profileRepository.findById(accountId)
+        if profile is None:
+            return Response(
+                {"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
+        email = profile.email
+        return Response(email, status=status.HTTP_200_OK)
+
+
