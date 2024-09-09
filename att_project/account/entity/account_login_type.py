@@ -6,6 +6,7 @@ class AccountLoginType(models.Model):
         GOOGLE = 'GOOGLE', 'Google'
         KAKAO = 'KAKAO', 'Kakao'
         NAVER = 'NAVER', 'Naver'
+        JWT = 'JSON_WEB_TOKEN', 'JSON_WEB_TOKEN'
 
     loginType = models.CharField(max_length=10, choices=LoginType.choices)
 

@@ -11,10 +11,17 @@ from json_web_token.service.user_service import UserService  # 추상 서비스 
 # 사용자 등록, 인증, 토큰 관리와 관련된 실제 비즈니스 로직을 처리
 class UserServiceImpl(UserService):
 
-    # 회원가입을 등록하는 메서드
-    def register_user(self, email, password):
+    # 회원가입을 처리하는 메서드
+    def register_user(self, email, password, name, nickname, mbti, gender):
         User = get_user_model()  # 현재 활성화된 사용자 모델을 가져옴
-        user = User.objects.create_user(email=email, password=password)  # 새 사용자 생성
+        user = User.objects.create_user(
+            email=email,
+            password=password,
+            name=name,
+            nickname=nickname,
+            mbti=mbti,
+            gender=gender
+        )  # 새 사용자 생성
         return user  # 생성된 사용자 반환
 
     # 사용자를 인증하는 메서드
