@@ -1,6 +1,6 @@
 from django.urls import path
 from json_web_token.controller.user_controller import UserCreate, AuthAPIView, UserListView, ForgotPasswordAPIView, \
-    ForgotEmailAPIView
+    ForgotEmailAPIView, MBTIListView
 
 # json_web_token 앱 내에서 사용할 URL 패턴을 정의
 urlpatterns = [
@@ -16,4 +16,7 @@ urlpatterns = [
     # 비밀번호 찾기와 이메일 찾기
     path('forgot-password/', ForgotPasswordAPIView.as_view(), name='forgot_password'),
     path('forgot-email/', ForgotEmailAPIView.as_view(), name='forgot_email'),
+
+    # DB의 MBTI 정보 불러오기
+    path('mbti-options/', MBTIListView.as_view(), name='mbti-options'),
 ]
