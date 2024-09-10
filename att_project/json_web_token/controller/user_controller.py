@@ -1,3 +1,4 @@
+from django.http import HttpResponseForbidden
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -127,7 +128,6 @@ class ForgotPasswordAPIView(APIView):
         except User.DoesNotExist:
             return Response({"error": "해당 이메일을 사용하는 계정이 없습니다."}, status=status.HTTP_400_BAD_REQUEST)
 
-
 # 이메일 찾기를 처리하는 API
 class ForgotEmailAPIView(APIView):
     def post(self, request):
@@ -148,6 +148,7 @@ class UserListView(generics.ListAPIView):
 
 class MBTIListView(APIView):
     def get(self, request):
+        # 모든 MBTI 유형을 제공하는 옵션 리스트
         mbti_options = [
             'INTJ', 'INTP', 'ENTJ', 'ENTP',
             'INFJ', 'INFP', 'ENFJ', 'ENFP',
@@ -160,6 +161,7 @@ class MBTIListView(APIView):
 class CheckEmailDuplicateAPIView(APIView):
     def post(self, request):
         email = request.data.get('email')
+        # 이메일이 이미 존재하는지 확인
         if User.objects.filter(email=email).exists():
             return Response({'is_duplicate': True}, status=status.HTTP_200_OK)
         return Response({'is_duplicate': False}, status=status.HTTP_200_OK)
@@ -168,31 +170,31 @@ class CheckEmailDuplicateAPIView(APIView):
 class CheckNicknameDuplicateAPIView(APIView):
     def post(self, request):
         nickname = request.data.get('nickname')
+        # 닉네임이 이미 존재하는지 확인
         if User.objects.filter(nickname=nickname).exists():
             return Response({'is_duplicate': True}, status=status.HTTP_200_OK)
         return Response({'is_duplicate': False}, status=status.HTTP_200_OK)
 
-# 관리자 회원 관리를 위한 조회
+# 관리자 회원 관리를 위한 조회 및 사용자 관리 API
 class ManagerView(generics.ListAPIView):
-    """
-    관리자 뷰: 사용자 목록 조회 및 사용자 관리
-    """
-
-    queryset = User.objects.all()
+    queryset = User.objects.all()  # 모든 사용자 조회
     serializer_class = UserSerializer
 
+    def dispatch(self, request, *args, **kwargs):
+        # 환경 변수에서 관리자 이메일 가져오기
+        admin_email = settings.ADMIN_EMAIL
+        # 로그인한 사용자가 관리자 이메일이 아니면 접근 금지
+        if request.user.email != admin_email:
+            return HttpResponseForbidden("You are not allowed to access this page.")
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request, *args, **kwargs):
-        """
-        모든 사용자 목록을 조회합니다.
-        """
+        # 모든 사용자 목록을 조회
         users = self.get_queryset()
         serializer = self.get_serializer(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
-        """
-        사용자 정보를 기반으로 새로운 사용자 생성 또는 기타 작업을 수행합니다.
-        """
         user_data = request.data
         user_serializer = UserSerializer(data=user_data)
         if user_serializer.is_valid():
