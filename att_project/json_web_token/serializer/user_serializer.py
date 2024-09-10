@@ -10,8 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         # 직렬화/역직렬화할 모델을 User로 설정
         model = User
-        # 포함할 필드를 명시 (email, password, name, nickname, mbti, gender, created_at, updated_at)
-        fields = ('email', 'password', 'name', 'nickname', 'mbti', 'gender', 'created_at', 'updated_at')
+        # 포함할 필드를 명시 (id, email, password, name, nickname, mbti, gender, created_at, updated_at)
+        fields = ('id', 'email', 'password', 'name', 'nickname', 'mbti', 'gender', 'created_at', 'updated_at')
         # 추가적인 필드 옵션을 설정
         extra_kwargs = {
             # password 필드를 write-only로 설정하여 사용자에게 노출되지 않게 함
