@@ -1,4 +1,5 @@
 from rest_framework import viewsets, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from board.entity.models import Board
@@ -15,6 +16,9 @@ class BoardView(viewsets.ViewSet): # viewset 왜 사용하는지 알아보기 >>
     boardService = BoardServiceImpl.getInstance() # 외부 요청을 service로 보내기 위함
     # 1단계 하단에 보내기 위해서 징검다리(통로)가 필요한데 이 통로 역할을 getInstance()가 해줍니다.
 
+    # 인증된 사용자만 접근 가능
+    permission_classes = [IsAuthenticated]
+
     def list(self, request): # controller는 외부요청(vue 요청)을 다루기 때문에 함수 입력 인자로 request 포함됩니다.
         boardList = self.boardService.list()
         serializer = BoardSerializer(boardList, many=True)
@@ -22,9 +26,7 @@ class BoardView(viewsets.ViewSet): # viewset 왜 사용하는지 알아보기 >>
 
     def create(self, request):
         serializer = BoardSerializer(data=request.data)
-        print(request.data)
         if serializer.is_valid():
             board = self.boardService.createBoard(serializer.validated_data)
             return Response(BoardSerializer(board).data, status=status.HTTP_201_CREATED)
-
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

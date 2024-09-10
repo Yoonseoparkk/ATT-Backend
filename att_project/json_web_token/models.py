@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
-
 # Custom User Manager Class로 사용자, 관리자를 생성하는 메서드
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -19,24 +18,17 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault('is_active', True)
         return self.create_user(email, password, **extra_fields)
 
-
-# Custom User Model로 Django의 기본 사용자 Model을 Custom해 이메일로 로그인 및 권한을 관리
 class User(AbstractBaseUser, PermissionsMixin):
-    # 사용자 이메일 주소를 정의하고 최대 255자까지 허용
-    email = models.EmailField(max_length=255, unique=True)
-
-    # 추가된 필드들
+    email = models.EmailField(max_length=255, unique=True)  # 고유값 설정
+    nickname = models.CharField(max_length=255, unique=True, blank=True, null=True)  # 고유값 설정
     name = models.CharField(max_length=255, default="Unnamed")
-    nickname = models.CharField(max_length=255, blank=True, null=True)
 
-    # 성별 필드를 정의 ("M" - 남자, "F" - 여자)
     GENDER_CHOICES = [
         ('M', '남자'),
         ('F', '여자'),
     ]
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
 
-    # MBTI 필드를 정의
     MBTI_CHOICES = [
         ('INTJ', 'INTJ'), ('INTP', 'INTP'), ('ENTJ', 'ENTJ'), ('ENTP', 'ENTP'),
         ('INFJ', 'INFJ'), ('INFP', 'INFP'), ('ENFJ', 'ENFJ'), ('ENFP', 'ENFP'),
